@@ -3,12 +3,41 @@
   <head>
     <style>
       body {
-        width: 200px;
+        width: 250px;
+      }
+      #search-input {
+        width: 100%;
+        padding: 6px;
+        margin-bottom: 16px;
+      }
+      
+      #results-container {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      #results-container li {
+        padding: 6px 0;
+      }
+      
+      #results-container li a {
+        text-decoration: none;
+        color: #1a0dab;
+      }
+      
+      #results-container li a:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
   <body>
     Load a ChatGPT conversation for the Save button to appear. <br/><br/>
     To save a new conversation, refresh the page and click the conversation name for proper functionality.
+    <h3>Search</h3>
+    <input type="text" id="search-input">
+    <ul id="results-container"></ul>
+    <script src="shared.js"></script>
+    <script src="popup.js"></script>
   </body>
 </html>

@@ -63,14 +63,17 @@ function downloadConversation(data, pageUrl) {
                 }
             });
 
-            const interceptFetch = (urlRegex, callback) => {
+            const interceptFetch = (convoUrlRegex, convoCallback, convoListUrlRegex, convoListCallback) => {
                 const originalFetch = window.fetch;
                 window.fetch = async (input, init) => {
                     const response = await originalFetch(input, init);
-                    if (typeof input === 'string' && urlRegex.test(input)) {
+                    if (typeof input === 'string' && convoUrlRegex.test(input)) {
                         interceptedUrl = input;
                         const clonedResponse = response.clone();
-                        callback(await clonedResponse.json());
+                        convoCallback(await clonedResponse.json());
+                    } else if (typeof input === 'string' && convoListUrlRegex.test(input)) {
+                        const clonedResponse = response.clone();
+                        convoListCallback(await clonedResponse.json());
                     }
                     return response;
                 };
@@ -78,10 +81,11 @@ function downloadConversation(data, pageUrl) {
 
             interceptFetch(/\/backend-api\/conversation\//, (data) => {
                 conversationData = data;
+            }, /\/backend-api\/conversations/, (data) => {
+                addItems(data.items, () => {
+                    console.log("saved convo list to localStorage");
+                });
             });
         }
     };
 })();
-
-  
-  

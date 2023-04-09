@@ -4,9 +4,14 @@ if (request.action === 'downloadConversation') {
 }
 });
 
-const script = document.createElement('script');
-script.src = chrome.runtime.getURL('inject.js');
-(document.head || document.documentElement).appendChild(script);
+function injectScriptFile(filePath) {
+    const script = document.createElement('script');
+    script.src = chrome.runtime.getURL(filePath);
+    (document.head || document.documentElement).appendChild(script);
+}
+
+injectScriptFile('shared.js');
+injectScriptFile('inject.js');
 
 document.onreadystatechange = () => {
     if (document.readyState === 'interactive' || document.readyState === 'complete') {
@@ -23,3 +28,12 @@ document.onreadystatechange = () => {
         });
     }
 }
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    console.log(request.action);
+    if (request.action === "searchLocalStorage") {
+      const searchTerm = request.searchTerm;
+      const searchResults = searchItems(searchTerm);
+      sendResponse(searchResults);
+    }
+  });
