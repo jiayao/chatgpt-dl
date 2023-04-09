@@ -1,0 +1,15 @@
+/* styles.css */
+.download-button {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  z-index: 9999;
+  background-color: #149474;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
