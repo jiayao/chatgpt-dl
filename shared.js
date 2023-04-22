@@ -10,8 +10,8 @@ function getItems() {
 function addItem(item) {
     const items = getItems();
     const itemExists = items.some(existingItem => existingItem.id === item.id);
-
-    if (!itemExists) {
+    
+    if (!itemExists && item.title != "New chat") {
         items.push(item);
         storeItems(items);
     }
@@ -24,11 +24,7 @@ function addItems(items) {
 }
 
 function searchItems(keyword) {
-    console.log("Searching");
     const items = getItems();
-    console.log(items);
     let results = items.filter(item => item.title.toLowerCase().includes(keyword.toLowerCase()));
-    console.log(results);
     return results;
-  }
-  
+}
